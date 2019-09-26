@@ -85,7 +85,7 @@ def get_activations(model, x, layer_name=None):
     return result
 
 
-def display_activations(activations, cmap=None, save=False):
+def display_activations(activations, cmap=None, save=False, path='./'):
     """
     Plot the activations for each layer using matplotlib
     :param activations: dict mapping layers to corresponding activations (1, output_h, output_w, num_filters)
@@ -117,14 +117,14 @@ def display_activations(activations, cmap=None, save=False):
         cbar = fig.add_axes([0.85, 0.15, 0.03, 0.7])
         fig.colorbar(hmap, cax=cbar)
         if save:
-            plt.savefig(layer_name.split('/')[0] + '.png', bbox_inches='tight')
+            plt.savefig(path + layer_name.split('/')[0] + '.png', bbox_inches='tight')
         else:
             plt.show()
         # pyplot figures require manual closing
         plt.close(fig)
 
 
-def display_heatmaps(activations, input_image, save=False, fix=True):
+def display_heatmaps(activations, input_image, save=False, fix=True, path='./'):
     """
     Plot heatmaps of activations for all filters overlayed on the input image for each layer
     :param activations: dict mapping layers to corresponding activations with the shape (1, output height, output width, number of filters)
@@ -184,13 +184,13 @@ def display_heatmaps(activations, input_image, save=False, fix=True):
                 axes.flat[i].imshow(img, alpha=0.3, cmap='jet', interpolation='bilinear')
             axes.flat[i].axis('off')
         if save:
-            plt.savefig(layer_name.split('/')[0] + '.png', bbox_inches='tight')
+            plt.savefig(path + layer_name.split('/')[0] + '.png', bbox_inches='tight')
         else:
             plt.show()
         plt.close(fig)
 
 
-def display_gradients_of_trainable_weights(gradients, save=False):
+def display_gradients_of_trainable_weights(gradients, save=False, path='./'):
     """
     Plot in_channels by out_channels grid of grad heatmaps each of dimensions (filter_h, filter_w)
     :param gradients: dict mapping layers to corresponding gradients (filter_h, filter_w, in_channels, out_channels)
@@ -217,7 +217,7 @@ def display_gradients_of_trainable_weights(gradients, save=False):
         cbar = fig.add_axes([0.85, 0.15, 0.03, 0.7])
         fig.colorbar(hmap, cax=cbar)
         if save:
-            plt.savefig(layer_name.split('/')[0] + '.png', bbox_inches='tight')
+            plt.savefig(path + layer_name.split('/')[0] + '.png', bbox_inches='tight')
         else:
             plt.show()
         plt.close(fig)
